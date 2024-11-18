@@ -387,7 +387,7 @@ void CMfcCircleMoveDlg::OnBnClickedBtnLoadImg()
 	MY_ASSERT(SUCCEEDED(hr));
 
 
-	Process::GetCircleCenter(m_image, MAP_COLOR, CIRCLE_COLOR, &m_openCircleCenterX, &m_openCircleCenterY); // todo : use multi thread for reducing time
+	Process::GetCircleCenter(m_image, MAP_COLOR, CIRCLE_COLOR, &m_openCircleCenterX, &m_openCircleCenterY);
 
 	WriteEditControl();
 	//draw 'X' on center
