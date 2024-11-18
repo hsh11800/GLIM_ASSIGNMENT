@@ -197,8 +197,12 @@ void CMfcCircleMoveDlg::OnBnClickedBtnDraw()
 
 void CMfcCircleMoveDlg::OnBnClickedBtnAction()
 {
+	ReadEditControl();
 	static int s_centerX = m_startX;
 	static int s_centerY = m_startY;
+
+	MakeInitImage();
+
 	const char* imgPath = ".\\image\\";
 
 	for (int actionCount = 1; actionCount <= MOVE_COUNT; ++actionCount) {
@@ -210,7 +214,7 @@ void CMfcCircleMoveDlg::OnBnClickedBtnAction()
 		const bool bSaved = SaveImage(imgPath, actionCount - 1);
 
 		MY_ASSERT(bSaved);
-		Sleep(30);
+		Sleep(10);
 	}
 
 	ResetCircle(s_centerX, s_centerY);
@@ -268,7 +272,9 @@ void CMfcCircleMoveDlg::MakeInitImage()
 	}
 	unsigned char* fm = static_cast<unsigned char*>(m_image.GetBits());
 
-	memset(fm, MAP_COLOR, sizeof(fm[0]) * m_mapWidth * m_mapHeight);
+	const int nPitch = m_image.GetPitch();
+	ASSERT(nPitch > 0);
+	memset(fm, MAP_COLOR, sizeof(fm[0]) * nPitch * m_mapHeight);
 
 }
 
@@ -387,7 +393,7 @@ void CMfcCircleMoveDlg::OnBnClickedBtnLoadImg()
 	MY_ASSERT(SUCCEEDED(hr));
 
 
-	Process::GetCircleCenter(m_image, MAP_COLOR, CIRCLE_COLOR, &m_openCircleCenterX, &m_openCircleCenterY);
+	Process::GetCircleCenter(&m_image, MAP_COLOR, CIRCLE_COLOR, &m_openCircleCenterX, &m_openCircleCenterY);
 
 	WriteEditControl();
 	//draw 'X' on center
@@ -404,7 +410,7 @@ void CMfcCircleMoveDlg::OnBnClickedBtnLoadImg()
 	const int drawMaxY = min(m_openCircleCenterY + CENTER_X_LENGTH / 2, nHeight - 1);
 
 
-	unsigned char* fm = static_cast<unsigned char*>(m_image.GetBits());
+	unsigned char* const fm = static_cast<unsigned char*>(m_image.GetBits());
 
 	int x = m_openCircleCenterX;
 	int y = m_openCircleCenterY;

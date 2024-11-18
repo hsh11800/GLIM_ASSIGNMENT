@@ -1,0 +1,66 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+#ifdef _DEBUG
+#define ASSERT(expr)\
+if (!(expr))\
+{\
+	_asm {\
+	int 3\
+	}\
+}
+#else
+#define ASSERT(expr)
+#endif
+
+#define ARRAY_LENGTH(arr) sizeof((arr)) / sizeof((arr)[0])
+
+enum
+{
+
+	MAX_INPUT = 9999,
+	MIN_INPUT = 1,
+};
+
+
+int makeSumNum(const int first, const int second)
+{
+	ASSERT(first <= MAX_INPUT);
+	ASSERT(second <= MAX_INPUT);
+	ASSERT(first >= MIN_INPUT);
+	ASSERT(second >= MIN_INPUT);
+	if (second < 10) {
+		return first * 10 + second;
+	}
+	if (second < 100) {
+		return first * 100 + second;
+	}
+	if (second < 1000) {
+		return first * 1000 + second;
+	}
+	return first * 10000 + second;
+
+}
+
+int solution(const int firstNum, const int secondNum)
+{
+	ASSERT(firstNum <= MAX_INPUT);
+	ASSERT(secondNum <= MAX_INPUT);
+	ASSERT(firstNum >= MIN_INPUT);
+	ASSERT(secondNum >= MIN_INPUT);
+	if (firstNum == secondNum)
+	{
+		return makeSumNum(firstNum, secondNum);
+	}
+
+	const int firstSecond = makeSumNum(firstNum, secondNum);
+	const int secondFirst = makeSumNum(secondNum, firstNum);
+	if (firstSecond > secondFirst)
+	{
+		return firstSecond;
+	}
+	return secondFirst;
+}
+
