@@ -208,8 +208,8 @@ void CMfcCircleMoveDlg::OnBnClickedBtnAction()
 	for (int actionCount = 1; actionCount <= MOVE_COUNT; ++actionCount) {
 
 		ResetCircle(s_centerX, s_centerY);
-		s_centerX = m_startX + static_cast<int>(static_cast<double>(m_dstX - m_startX) / MOVE_COUNT * actionCount);
-		s_centerY = m_startY + static_cast<int>(static_cast<double>(m_dstY - m_startY) / MOVE_COUNT * actionCount);
+		s_centerX = m_startX + static_cast<int>(static_cast<double>(m_dstX - m_startX) / MOVE_COUNT * actionCount + 0.5);
+		s_centerY = m_startY + static_cast<int>(static_cast<double>(m_dstY - m_startY) / MOVE_COUNT * actionCount + 0.5);
 		DrawCircle(s_centerX, s_centerY);
 		const bool bSaved = SaveImage(imgPath, actionCount - 1);
 

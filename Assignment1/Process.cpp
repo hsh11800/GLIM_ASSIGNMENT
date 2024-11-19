@@ -33,6 +33,7 @@ void Process::GetCircleCenter(const CImage* const image, const unsigned char map
 	static_assert(sizeof(circlePixelCount[0][0]) == 8, "");
 
 	MY_ASSERT(nWidth - nWidth / 2)
+
 	std::thread thread0(GetCirclePointSum, image, 0, 0, nWidth / 2, nHeight / 2, mapColor, circleColor, &circleXSum[0][0], &circleYSum[0][0], &circlePixelCount[0][0]);
 	std::thread thread1(GetCirclePointSum, image, nWidth / 2, 0, nWidth - nWidth / 2, nHeight / 2, mapColor, circleColor, &circleXSum[0][1], &circleYSum[0][1], &circlePixelCount[0][1]);
 	std::thread thread2(GetCirclePointSum, image, 0, nHeight / 2, nWidth / 2, nHeight - nHeight / 2, mapColor, circleColor, &circleXSum[1][0], &circleYSum[1][0], &circlePixelCount[1][0]);
@@ -42,7 +43,7 @@ void Process::GetCircleCenter(const CImage* const image, const unsigned char map
 	thread1.join();
 	thread2.join();
 	thread3.join();
-	
+
 
 	long long allCircleXSum = circleXSum[0][0] + circleXSum[0][1] + circleXSum[1][0] + circleXSum[1][1];
 	long long allCircleYSum = circleYSum[0][0] + circleYSum[0][1] + circleYSum[1][0] + circleYSum[1][1];
@@ -54,7 +55,6 @@ void Process::GetCircleCenter(const CImage* const image, const unsigned char map
 }
 
 // Process 멤버 함수
-
 
 void Process::GetCirclePointSum(const CImage* const image, const int startX, const int startY, const int findWidth, const int findHeight, const unsigned char mapColor, const unsigned char circleColor, long long* const outXSum, long long* const outYSum, long long* const outPointCount)
 {
@@ -92,6 +92,5 @@ void Process::GetCirclePointSum(const CImage* const image, const int startX, con
 		}
 
 }
-
 
 // Process 멤버 함수
